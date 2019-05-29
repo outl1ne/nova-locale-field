@@ -3,8 +3,10 @@
 namespace OptimistDigital\NovaLocaleField;
 
 use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Nova;
 
-class NovaLocaleField extends Field
+class LocaleField extends Field
 {
     /** @var String $component The Vue component for the field. */
     public $component = 'nova-locale-field';
@@ -69,7 +71,7 @@ class NovaLocaleField extends Field
         $value = [
             'id' => $id,
             'locale' => $resource->{$this->attribute},
-            'locale_parent_id' => $resource->{$this->localeParentIdAttribute},
+            'localeParentId' => $resource->{$this->localeParentIdAttribute},
             'locales' => []
         ];
 
@@ -87,17 +89,26 @@ class NovaLocaleField extends Field
 
         // Add other resources
         $resources = $model::whereNull($this->localeParentIdAttribute)->get()
-            ->map(function ($resource) {
+            ->map(function ($model) {
+                $resource = Nova::resourceForModel(get_class($model));
+                if (empty($resource)) return null;
+
+                $instance = new $resource($model);
                 return [
-                    'id' => $resource->id,
-                    'label' => $resource->title(),
+                    'id' => $model->id,
+                    'label' => $instance->title(),
                 ];
             })
             ->pluck('label', 'id');
 
         $this->withMeta([
             'asHtml' => true,
-            'locales' => $locales,
+            'locales' => array_map(function ($localeKey) use ($locales) {
+                return [
+                    'label' => $locales[$localeKey],
+                    'value' => $localeKey,
+                ];
+            }, array_keys($locales)),
             'resources' => $resources,
         ]);
 
@@ -115,5 +126,17 @@ class NovaLocaleField extends Field
     {
         // TODO
         return $this->fillInto($request, $model, $this->attribute);
+    }
+
+    /**
+     * Sets the locales of a specific field.
+     *
+     * @param array $locales Array of locales.
+     * @return \OptimistDigital\NovaLocaleField\LocaleField
+     **/
+    public function setLocales(array $locales = null)
+    {
+        $this->locales = $locales;
+        return $this;
     }
 }
