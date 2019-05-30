@@ -15,19 +15,17 @@
       </template>
     </default-field>
 
-    <div v-if="localePreviouslySet" style="position: absolute; top: -8px; right: 0;">
-      <button type="button" class="btn btn-default btn-primary inline-flex items-center relative">
-        {{ localeDisplayName }}
-      </button>
-    </div>
+    <locale-button v-if="localePreviouslySet" :field="field" :locale="locale" style="position: absolute; top: -8px; right: 0;" />
   </div>
 </template>
 
 <script>
 import { FormField, HandlesValidationErrors } from 'laravel-nova';
 import { getParameterByName } from '../../js/util';
+import LocaleButton from './LocaleButton';
 
 export default {
+  components: { LocaleButton },
   mixins: [FormField, HandlesValidationErrors],
 
   props: ['resourceName', 'resourceId', 'field'],
@@ -43,9 +41,6 @@ export default {
   computed: {
     parentResourceName() {
       return this.field.resources[this.localeParentId] || null;
-    },
-    localeDisplayName() {
-      return this.field.locales.find(l => l.value === this.locale).label;
     },
   },
 
