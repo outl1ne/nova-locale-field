@@ -72,7 +72,7 @@ class LocaleField extends Field
             'id' => $id,
             'locale' => $resource->{$this->attribute},
             'localeParentId' => $resource->{$this->localeParentIdAttribute},
-            'locales' => []
+            'locales' => [],
         ];
 
         // Is master
@@ -110,6 +110,8 @@ class LocaleField extends Field
                 ];
             }, array_keys($locales)),
             'resources' => $resources,
+            'localeParentIdAttribute' => $this->localeParentIdAttribute,
+            'localeAttribute' => $this->attribute,
         ]);
 
         $this->rules('required', 'in:' . implode(',', array_keys($this->locales)));
@@ -124,8 +126,8 @@ class LocaleField extends Field
      */
     public function fill(NovaRequest $request, $model)
     {
-        // TODO
-        return $this->fillInto($request, $model, $this->attribute);
+        $this->fillInto($request, $model, $this->localeParentIdAttribute, $this->localeParentIdAttribute);
+        return $this->fillInto($request, $model, $this->attribute, $this->attribute);
     }
 
     /**
