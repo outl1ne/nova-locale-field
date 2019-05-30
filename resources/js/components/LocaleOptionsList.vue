@@ -62,7 +62,7 @@ export default {
   props: ['resource', 'resourceName', 'resourceId', 'field'],
   computed: {
     locales() {
-      const localeKeys = this.field.locales.map(l => l.value);
+      const localeKeys = Object.keys(this.field.value.existingLocalisations);
       return localeKeys.filter(l => l !== this.field.value.locale);
     },
   },
