@@ -1,16 +1,16 @@
 <template>
-  <div v-if="field.value.locales">
+  <div v-if="field.locales">
     <span v-for="locale in locales" :key="locale" class="flex items-center" stype="margin: 2px 0;">
       <!-- Edit link -->
       <router-link
-        v-if="field.value.locales[locale]"
+        v-if="field.value.existingLocalisations[locale]"
         class="no-underline dim text-primary font-bold flex items-center"
-        :dusk="`${field.value.locales[locale].id}-edit-button`"
+        :dusk="`${field.value.existingLocalisations[locale]}-edit-button`"
         :to="{
           name: 'edit',
           params: {
             resourceName: resourceName,
-            resourceId: field.value.locales[locale].id,
+            resourceId: field.value.existingLocalisations[locale],
           },
           query: {
             viaResource: resourceName,
@@ -62,7 +62,8 @@ export default {
   props: ['resource', 'resourceName', 'resourceId', 'field'],
   computed: {
     locales() {
-      return Object.keys(this.field.value.locales).filter(l => l !== this.field.value.locale);
+      const localeKeys = this.field.locales.map(l => l.value);
+      return localeKeys.filter(l => l !== this.field.value.locale);
     },
   },
 };

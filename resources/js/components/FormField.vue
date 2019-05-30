@@ -1,6 +1,6 @@
 <template>
   <div>
-    <default-field :field="field" :errors="errors">
+    <default-field :field="{ name: 'Locale' }" :errors="errors">
       <template slot="field">
         <select name="locale" class="w-full form-control form-input form-input-bordered" v-model="locale" :disabled="localePreviouslySet">
           <option value="">Choose a locale</option>
@@ -9,7 +9,7 @@
       </template>
     </default-field>
 
-    <default-field :field="field" :errors="errors">
+    <default-field :field="{ name: 'Locale parent' }" :errors="errors">
       <template slot="field">
         <input type="text" :value="displayValue" readonly class="w-full form-control form-input form-input-bordered" />
       </template>

@@ -72,7 +72,7 @@ class LocaleField extends Field
             'id' => $id,
             'locale' => $resource->{$this->attribute},
             'localeParentId' => $resource->{$this->localeParentIdAttribute},
-            'locales' => [],
+            'existingLocalisations' => [],
         ];
 
         // Is master
@@ -80,9 +80,10 @@ class LocaleField extends Field
         $children = $model::where($this->localeParentIdAttribute, $queryParentId)->where('id', '!=', $id)->get();
 
         foreach (array_keys($locales) as $locale) {
-            $value['locales'][$locale] = $children->first(function ($c) use ($locale) {
+            $existing = $children->first(function ($c) use ($locale) {
                 return $c->locale === $locale;
             });
+            if (!empty($existing)) $value['existingLocalisations'][$locale] = $existing->id;
         }
 
         $this->value = $value;
