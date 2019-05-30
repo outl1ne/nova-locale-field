@@ -22,11 +22,16 @@ composer require optimistdigital/nova-locale-field
 
 ### Preparing the models and database
 
-This field requires database changes - namely, the model requires two new columns. The names of the columns can be of your own liking, as they're configured when creating the field.
+This field requires a few database changes - namely, the model requires two new columns: one for the locale and one to reference the locale parent model.
 
-Firstly, a text column for the locale is needed. Maximum size depends on which types of locales you use (ie `en` vs `en_US`). This should NOT be nullable.
+You can set the column names to anything you want. The column names are passed to the field when creating it.
 
-Secondly, a parent reference column is needed (essentially a foreign key, but having an actual foreign key is not required). If using Laravel's default unique identifiers for the models, it's type is `bigInteger`. This should be nullable.
+| Column           | Suggested name     | Type (MySQL / Eloquent) | Nullable | Example value | Description                                                                                                |
+| ---------------- | ------------------ | ----------------------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------- |
+| Locale           | `locale`           | `VARCHAR` / `string`    | NO       | `en_US`       | A text column for the locale, maximum size depends on which types of locales you use (ie `en` vs `en_US`). |
+| Locale parent ID | `locale_parent_id` | `BIGINT` / `bigInteger` | YES      | `1`           | A locale parent reference column (foreign key, though the actual foreign key is optional)                  |
+
+Example migration:
 
 ```php
 Schema::table('some_model_table', function ($table) {
@@ -40,27 +45,27 @@ Schema::table('some_model_table', function ($table) {
 
 ### Creating the field
 
-There's nothing special in the way this field is used besides having different constructor (`::make(...)`) arguments.
+This field has slightly different constructor (`::make()`) arguments than other Nova fields.
 
-The first argument is the displayed name of the locale field visible to the user that is displayed as the column title in the index field and as the locale select field.
-
-The second argument is the attribute name for the locale (same as your table column name).
-
-The third argument is the attribute name for the locale parent ID (same as your table column name).
+| #   | Argument                | Type   | Description                                                                                                                          |
+| --- | ----------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | \$name                  | string | Display name of the field, visible to the user as the column title in the index field and as the name of the locale selection field. |
+| 2   | \$localeAttribute       | string | The attribute (column) name of the locale value.                                                                                     |
+| 3   | \$localeParentAttribute | string | The attribute (column) name for the locale parent id.                                                                                |
 
 ```php
 use OptimistDigital\NovaLocaleField\LocaleField;
 
 LocaleField::make('Locale', 'locale', 'locale_parent_id')
-    ->locales(['en' => 'English', 'et' => 'Estonian'])
-    ->maxLocalesOnIndex(4)
+    ->locales(['en' => 'English', 'et' => 'Estonian']) // Optional when you've set a default
+    ->maxLocalesOnIndex(4) // Optional, defaults to 4
 ```
 
 ## Options
 
 Possible options you can pass to the field using the option name as a function, ie `->maxLocalesOnIndex(4)`.
 
-| Option              | type  | default | description                                                                                                          |
+| Option              | Type  | Default | Description                                                                                                          |
 | ------------------- | ----- | ------- | -------------------------------------------------------------------------------------------------------------------- |
 | `locales`           | array | []      | Locales in an array as key-value pairs (`['id' => 'value']`).                                                        |
 | `maxLocalesOnIndex` | int   | 4       | The amount of locales shown on the index view. If this is exceeded, the locales are only visible on the detail view. |
