@@ -17,8 +17,11 @@ class LocaleField extends Field
     /** @var Array $locales Array of locales. */
     protected $locales;
 
-    /** @var String|Number $localeParentIdAttribute The attribute name for the locale parent ID column. */
+    /** @var String|int $localeParentIdAttribute The attribute name for the locale parent ID column. */
     protected $localeParentIdAttribute;
+
+    /** @var int $maxLocalesOnIndex The max number of locales shown on index config override value. */
+    protected $maxLocalesOnIndex = null;
 
     /**
      * Create a new field.
@@ -37,6 +40,7 @@ class LocaleField extends Field
         // Retrieve locales
         $this->locales = is_callable(static::$getLocales) ? static::$getLocales() : null;
         $this->locales = empty($this->locales) ? [] : $this->locales;
+        $this->conditionsUpdated();
     }
 
     /**
@@ -48,6 +52,19 @@ class LocaleField extends Field
     public function getLocales(Closure $getLocales)
     {
         $this::$getLocales = $getLocales;
+    }
+
+    /**
+     * Forces a state update, hides the field on Index if conditions are met.
+     *
+     * @return \OptimistDigital\NovaLocaleField\LocaleField
+     * @throws conditon
+     **/
+    protected function conditionsUpdated()
+    {
+        $max = $this->maxLocalesOnIndex ?: config('nova-locale-field.max_locales_shown_on_index', 4);
+        if (sizeof($this->locales) > $max) $this->hideFromIndex();
+        return $this;
     }
 
     /**
@@ -140,6 +157,18 @@ class LocaleField extends Field
     public function setLocales(array $locales = null)
     {
         $this->locales = $locales;
-        return $this;
+        return $this->conditionsUpdated();
+    }
+
+    /**
+     * Sets the max locales shown on index config override value.
+     *
+     * @param int $max Description
+     * @return \OptimistDigital\NovaLocaleField\LocaleField
+     **/
+    public function maxLocalesOnIndex(int $max = null)
+    {
+        $this->maxLocalesOnIndex = $max;
+        return $this->conditionsUpdated();
     }
 }
