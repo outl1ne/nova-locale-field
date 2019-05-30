@@ -154,7 +154,7 @@ class LocaleField extends Field
      * @param array $locales Array of locales.
      * @return \OptimistDigital\NovaLocaleField\LocaleField
      **/
-    public function setLocales(array $locales = null)
+    public function locales(array $locales = null)
     {
         $this->locales = $locales;
         return $this->conditionsUpdated();
