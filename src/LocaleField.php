@@ -38,7 +38,7 @@ class LocaleField extends Field
         $this->localeParentIdAttribute = $localeParentIdAttribute;
 
         // Retrieve locales
-        $this->locales = is_callable(static::$getLocales) ? static::$getLocales() : null;
+        $this->locales = is_callable(static::$getLocales) ? call_user_func(static::$getLocales) : null;
         $this->locales = empty($this->locales) ? [] : $this->locales;
         $this->conditionsUpdated();
     }
@@ -49,16 +49,15 @@ class LocaleField extends Field
      * @param Closure $getLocales
      * @return void
      **/
-    public function getLocales(Closure $getLocales)
+    public static function getLocales($getLocales)
     {
-        $this::$getLocales = $getLocales;
+        static::$getLocales = $getLocales;
     }
 
     /**
      * Forces a state update, hides the field on Index if conditions are met.
      *
      * @return \OptimistDigital\NovaLocaleField\LocaleField
-     * @throws conditon
      **/
     protected function conditionsUpdated()
     {
