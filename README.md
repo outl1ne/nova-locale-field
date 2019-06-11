@@ -107,6 +107,51 @@ public function boot()
 }
 ```
 
+## Filters
+
+The package also provides two filters: a select type filter for the locales and a boolean type filter for hiding and showing child localisations of models.
+
+### Using the locale filter
+
+To use the locale filter, just add it to the array your resources' `filters()` function returns. Pass in the name of the locale field as the only argument in the `constructor` or the static `make` function.
+
+You can also override the default displayed locale options by calling `->locales([])` on the filter. This is optional and the filter will use the default locales when not set.
+
+```php
+use \OptimistDigital\NovaLocaleField\Filters\LocaleFilter;
+
+public function filters(Request $request)
+    {
+        return [
+            LocaleFilter::make('locale')
+                ->locales(NovaEcommerce::getLocales()), // <- Optional
+
+            // OR
+
+            new LocaleFilter('locale'),
+        ];
+    }
+```
+
+### Using the locale children filter
+
+Locale children filter works the same way - add it to your resources' `filters()` function. As opposed to the locale filter, the children filter requires the parent locale id field name as the only argument.
+
+```php
+use \OptimistDigital\NovaLocaleField\Filters\LocaleChildrenFilter;
+
+public function filters(Request $request)
+    {
+        return [
+            LocaleChildrenFilter::make('locale_parent_id')
+
+            // OR
+
+            new LocaleChildrenFilter('locale_parent_id'),
+        ];
+    }
+```
+
 ## Credits
 
 - [Tarvo Reinpalu](https://github.com/Tarpsvo)
