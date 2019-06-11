@@ -8,7 +8,7 @@ use OptimistDigital\NovaLocaleField\LocaleField;
 
 class LocaleFilter extends Filter
 {
-    public $name = 'Locale Filter';
+    public $name = 'Locale';
     public $component = 'select-filter';
     protected $localeFieldKey;
     protected $locales;
