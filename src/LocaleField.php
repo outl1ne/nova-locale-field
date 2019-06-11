@@ -38,7 +38,7 @@ class LocaleField extends Field
         $this->localeParentIdAttribute = $localeParentIdAttribute;
 
         // Retrieve locales
-        $this->locales = is_callable(static::$getLocales) ? call_user_func(static::$getLocales) : null;
+        $this->locales = self::loadLocales();
         $this->locales = empty($this->locales) ? [] : $this->locales;
         $this->conditionsUpdated();
     }
@@ -52,6 +52,16 @@ class LocaleField extends Field
     public static function getLocales($getLocales)
     {
         static::$getLocales = $getLocales;
+    }
+
+    /**
+     * Load the locales from the closure.
+     *
+     * @return array
+     **/
+    public static function loadLocales(): array
+    {
+        return is_callable(static::$getLocales) ? call_user_func(static::$getLocales) : null;
     }
 
     /**
