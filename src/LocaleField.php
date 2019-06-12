@@ -57,9 +57,9 @@ class LocaleField extends Field
     /**
      * Load the locales from the closure.
      *
-     * @return array
+     * @return array|null
      **/
-    public static function loadLocales(): array
+    public static function loadLocales()
     {
         return is_callable(static::$getLocales) ? call_user_func(static::$getLocales) : null;
     }
