@@ -1,8 +1,8 @@
 <template>
   <div>
-    <default-field :field="{ name: field.name }" :errors="errors" v-if="!localePreviouslySet">
+    <default-field :field="field" :errors="errors" v-if="!localePreviouslySet">
       <template slot="field">
-        <select name="locale" class="w-full form-control form-input form-input-bordered" v-model="locale" :disabled="localePreviouslySet">
+        <select name="locale" class="w-full form-control form-input form-input-bordered" :class="errorClasses" v-model="locale" :disabled="localePreviouslySet">
           <option value="">Choose a locale</option>
           <option :value="locale.value" v-for="locale in field.locales" :key="locale.value">{{ locale.label }}</option>
         </select>
