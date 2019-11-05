@@ -43,7 +43,7 @@
             viaResource: resourceName,
             viaResourceId: resourceId,
             viaRelationship: $route.query.viaRelationship,
-            localeParentId: field.value.id,
+            localeParentId: field.value.localeParentId || field.value.id,
             locale: locale,
           },
         }"
