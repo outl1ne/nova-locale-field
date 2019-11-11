@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.4] - 2019-11-11
+
+### Changed
+
+- Updated all packages
+- Removed `style` that broke modals
+
 ## [1.1.3] - 2019-11-05
 
 ### Changed
@@ -53,6 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Default locales support
 - Value override support (locales, max locales on index)
 
+[1.1.4]: https://github.com/optimistdigital/nova-locale-field/compare/1.1.3...1.1.4
 [1.1.3]: https://github.com/optimistdigital/nova-locale-field/compare/1.1.2...1.1.3
 [1.1.2]: https://github.com/optimistdigital/nova-locale-field/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/optimistdigital/nova-locale-field/compare/1.1.0...1.1.1
