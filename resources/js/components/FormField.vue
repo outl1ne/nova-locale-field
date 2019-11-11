@@ -59,9 +59,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.content > div:nth-of-type(2) > div {
-  position: relative;
-}
-</style>

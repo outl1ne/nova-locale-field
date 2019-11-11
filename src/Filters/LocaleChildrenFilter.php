@@ -34,7 +34,8 @@ class LocaleChildrenFilter extends BooleanFilter
         ];
     }
 
-    public function default()
+    public function
+    default()
     {
         return [
             'show_localisation_children' => false
