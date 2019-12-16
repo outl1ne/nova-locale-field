@@ -48,7 +48,9 @@ class LocaleField extends Field
     public static function getLocales()
     {
         $locales = config('nova-locale-field.locales', ['en' => 'English']);
-        return is_callable($locales) ? call_user_func($locales) : null;
+        if (is_callable($locales)) return $locales();
+        if (is_array($locales)) return $locales;
+        return ['en' => 'English'];
     }
 
     /**
