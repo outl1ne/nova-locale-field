@@ -11,9 +11,6 @@ class LocaleField extends Field
     /** @var String $component The Vue component for the field. */
     public $component = 'nova-locale-field';
 
-    /** @var Closure $getLocales Closure that returns the locales in an array. */
-    protected static $getLocales;
-
     /** @var Array $locales Array of locales. */
     protected $locales;
 
@@ -38,20 +35,9 @@ class LocaleField extends Field
         $this->localeParentIdAttribute = $localeParentIdAttribute;
 
         // Retrieve locales
-        $this->locales = self::loadLocales();
+        $this->locales = self::getLocales();
         $this->locales = empty($this->locales) ? [] : $this->locales;
         $this->conditionsUpdated();
-    }
-
-    /**
-     * Set the Closure that fetches the locales.
-     *
-     * @param Closure $getLocales
-     * @return void
-     **/
-    public static function getLocales($getLocales)
-    {
-        static::$getLocales = $getLocales;
     }
 
     /**
@@ -59,9 +45,10 @@ class LocaleField extends Field
      *
      * @return array|null
      **/
-    public static function loadLocales()
+    public static function getLocales()
     {
-        return is_callable(static::$getLocales) ? call_user_func(static::$getLocales) : null;
+        $locales = config('nova-locale-field.locales', ['en' => 'English']);
+        return is_callable($locales) ? call_user_func($locales) : null;
     }
 
     /**

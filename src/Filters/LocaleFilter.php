@@ -21,7 +21,7 @@ class LocaleFilter extends Filter
     public function __construct($localeFieldKey = 'locale')
     {
         $this->localeFieldKey = $localeFieldKey;
-        $this->locales = LocaleField::loadLocales();
+        $this->locales = LocaleField::getLocales();
     }
 
     public function apply(Request $request, $query, $value)
@@ -44,5 +44,11 @@ class LocaleFilter extends Filter
     {
         $this->locales = $locales;
         return $this;
+    }
+
+    public function
+    default()
+    {
+        return array_keys($this->locales)[0];
     }
 }
