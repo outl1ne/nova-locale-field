@@ -2,7 +2,13 @@
   <div>
     <default-field :field="field" :errors="errors" v-if="!localePreviouslySet">
       <template slot="field">
-        <select name="locale" class="w-full form-control form-input form-input-bordered" :class="errorClasses" v-model="locale" :disabled="localePreviouslySet">
+        <select
+          name="locale"
+          class="w-full form-control form-input form-input-bordered"
+          :class="errorClasses"
+          v-model="locale"
+          :disabled="localePreviouslySet"
+        >
           <option value="">Choose a locale</option>
           <option :value="locale.value" v-for="locale in field.locales" :key="locale.value">{{ locale.label }}</option>
         </select>
@@ -11,11 +17,16 @@
 
     <default-field :field="{ name: 'Locale parent' }" :errors="errors" v-if="parentResourceName">
       <template slot="field">
-        <input type="text" :value="parentResourceName" readonly class="w-full form-control form-input form-input-bordered" />
+        <input
+          type="text"
+          :value="parentResourceName"
+          readonly
+          class="w-full form-control form-input form-input-bordered"
+        />
       </template>
     </default-field>
 
-    <locale-button v-if="localePreviouslySet" :field="field" :locale="locale" style="position: absolute; top: -8px; right: 0;" />
+    <locale-button v-show="localePreviouslySet" :field="field" :locale="locale" ref="localeButton" />
   </div>
 </template>
 
@@ -36,6 +47,15 @@ export default {
       locale: void 0,
       localePreviouslySet: void 0,
     };
+  },
+
+  mounted() {
+    const formHeading = document.querySelector('form > * > h1');
+    if (formHeading && this.$refs.localeButton) {
+      formHeading.style.display = 'flex';
+      formHeading.style['align-items'] = 'center';
+      this.$nextTick(() => formHeading.append(this.$refs.localeButton.$el));
+    }
   },
 
   computed: {

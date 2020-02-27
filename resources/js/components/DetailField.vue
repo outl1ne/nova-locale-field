@@ -1,7 +1,12 @@
 <template>
   <panel-item :field="field">
     <template slot="value">
-      <locale-options-list :field="field" :resource="resource" :resource-id="resourceId" :resource-name="resourceName" />
+      <locale-options-list
+        :field="field"
+        :resource="resource"
+        :resource-id="resourceId"
+        :resource-name="resourceName"
+      />
       <locale-button :field="field" ref="localeButton" class="mr-3" />
     </template>
   </panel-item>
@@ -16,7 +21,9 @@ export default {
   props: ['resource', 'resourceName', 'resourceId', 'field'],
   mounted() {
     const deleteButtonEl = document.querySelector('.content').querySelector('[dusk="open-delete-modal-button"]');
-    deleteButtonEl.parentElement.insertBefore(this.$refs.localeButton.$el, deleteButtonEl);
+    if (deleteButtonEl) {
+      deleteButtonEl.parentElement.insertBefore(this.$refs.localeButton.$el, deleteButtonEl);
+    }
   },
 };
 </script>
