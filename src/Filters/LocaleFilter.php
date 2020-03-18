@@ -13,11 +13,6 @@ class LocaleFilter extends Filter
     protected $localeFieldKey;
     protected $locales;
 
-    public static function make($localeFieldKey = 'locale')
-    {
-        return new static($localeFieldKey);
-    }
-
     public function __construct($localeFieldKey = 'locale')
     {
         $this->localeFieldKey = $localeFieldKey;
