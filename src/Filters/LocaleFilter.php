@@ -13,6 +13,17 @@ class LocaleFilter extends Filter
     protected $localeFieldKey;
     protected $locales;
 
+    /**
+     * Creates the filter.
+     *
+     * @param string $localeFieldKey The model attribute that contains the locale.
+     * @return \OptimistDigital\NovaLocaleField\Filters\LocaleFilter
+     **/
+    public static function make(...$arguments)
+    {
+        return new static(...$arguments);
+    }
+
     public function __construct($localeFieldKey = 'locale')
     {
         $this->localeFieldKey = $localeFieldKey;
