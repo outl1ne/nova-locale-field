@@ -92,7 +92,14 @@ class LocaleField extends Field
 
         // Is master
         $queryParentId = empty($localeParentId) ? $id : $localeParentId;
-        $children = $model::where($this->localeParentIdAttribute, $queryParentId)->orWhere('id', $queryParentId)->where('id', '!=', $id)->get();
+        $children = $model
+            ::where(function ($query) use ($queryParentId) {
+                return $query
+                    ->where($this->localeParentIdAttribute, $queryParentId)
+                    ->orWhere('id', $queryParentId);
+            })
+            ->where('id', '!=', $id)
+            ->get();
 
         foreach (array_keys($locales) as $locale) {
             $existing = $children->first(function ($c) use ($locale) {
