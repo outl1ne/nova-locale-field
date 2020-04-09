@@ -133,25 +133,6 @@ public function filters(Request $request)
     }
 ```
 
-### Using the locale children filter
-
-Locale children filter works the same way - add it to your resources' `filters()` function. As opposed to the locale filter, the children filter requires the parent locale id field name as the only argument.
-
-```php
-use \OptimistDigital\NovaLocaleField\Filters\LocaleChildrenFilter;
-
-public function filters(Request $request)
-    {
-        return [
-            LocaleChildrenFilter::make('locale_parent_id')
-
-            // OR
-
-            new LocaleChildrenFilter('locale_parent_id'),
-        ];
-    }
-```
-
 ## Credits
 
 - [Tarvo Reinpalu](https://github.com/Tarpsvo)
