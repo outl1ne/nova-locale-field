@@ -12,6 +12,7 @@ class LocaleFilter extends Filter
     public $component = 'select-filter';
     protected $localeFieldKey;
     protected $locales;
+    protected $defaultValue;
 
     /**
      * Creates the filter.
@@ -52,9 +53,22 @@ class LocaleFilter extends Filter
         return $this;
     }
 
+    /**
+     * Set the default value for the filter.
+     * Use empty string (`''`) to select nothing.
+     *
+     * @param $defaultValue
+     * @return OptimistDigital\NovaLocaleField\Filters\LocaleFilter
+     **/
+    public function defaultValue($defaultValue = null)
+    {
+        $this->defaultValue = $defaultValue;
+        return $this;
+    }
+
     public function
     default()
     {
-        return array_keys($this->locales)[0];
+        return isset($this->defaultValue) ? $this->defaultValue : array_keys($this->locales)[0];
     }
 }
