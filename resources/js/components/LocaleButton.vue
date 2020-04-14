@@ -21,7 +21,7 @@ export default {
     },
 
     localeDisplayName() {
-      const localeSlug = this.locale || this.field.value.locale || null;
+      const localeSlug = this.locale || (this.field.value && this.field.value.locale) || null;
       const matchedLocale = this.field.locales.find(l => l.value === localeSlug);
       return matchedLocale && matchedLocale.label;
     },

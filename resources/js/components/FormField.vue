@@ -60,7 +60,7 @@ export default {
 
   computed: {
     parentResourceName() {
-      return this.field.resources[this.localeParentId] || null;
+      return (this.field.resources && this.field.resources[this.localeParentId]) || null;
     },
   },
 

@@ -38,6 +38,18 @@ class LocaleField extends Field
         $this->locales = self::getLocales();
         $this->locales = empty($this->locales) ? [] : $this->locales;
         $this->conditionsUpdated();
+
+        $this->withMeta([
+            'asHtml' => true,
+            'locales' => array_map(function ($localeKey) {
+                return [
+                    'label' => $this->locales[$localeKey],
+                    'value' => $localeKey,
+                ];
+            }, array_keys($this->locales)),
+            'localeParentIdAttribute' => $this->localeParentIdAttribute,
+            'localeAttribute' => $this->attribute,
+        ]);
     }
 
     /**
@@ -124,18 +136,9 @@ class LocaleField extends Field
             })
             ->pluck('label', 'id');
 
-        $this->withMeta([
-            'asHtml' => true,
-            'locales' => array_map(function ($localeKey) use ($locales) {
-                return [
-                    'label' => $locales[$localeKey],
-                    'value' => $localeKey,
-                ];
-            }, array_keys($locales)),
+        $this->withMeta(array_merge($this->meta, [
             'resources' => $resources,
-            'localeParentIdAttribute' => $this->localeParentIdAttribute,
-            'localeAttribute' => $this->attribute,
-        ]);
+        ]));
 
         $this->rules('required', 'in:' . implode(',', array_keys($this->locales)));
     }
