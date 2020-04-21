@@ -84,32 +84,13 @@ php artisan vendor:publish --provider="OptimistDigital\NovaLocaleField\FieldServ
 
 ### Default locales
 
-The default locales can be defined using the `LocaleField::getLocales(Closure $closure)` function, preferably in `NovaServiceProvider`'s `boot()` function.
+The default locales can be defined in the config file via a closure or an array.
 
-This default value can be overriden using the `->locales([])` function directly on the field.
-
-For example:
-
-```php
-// in app/Providers/NovaServiceProvider.php
-
-public function boot()
-{
-    \OptimistDigital\NovaLocaleField\LocaleField::getLocales(function() {
-        return [
-            'en' => 'English',
-            'et' => 'Estonian',
-        ];
-
-        // Or for example do a query:
-        // return Locales::all()->pluck('name', 'slug');
-    });
-}
-```
+This default value can be overriden on a per-field basis using the `->locales([])` function directly on the field.
 
 ## Filters
 
-The package also provides two filters: a select type filter for the locales and a boolean type filter for hiding and showing child localisations of models.
+The package also provides a select type filter for the locales.
 
 ### Using the locale filter
 
