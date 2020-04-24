@@ -7,7 +7,7 @@
         :resource-id="resourceId"
         :resource-name="resourceName"
       />
-      <locale-button :field="field" ref="localeButton" class="mr-3" />
+      <locale-button :field="field" ref="localeButton" custom-class="mr-3" />
     </template>
   </panel-item>
 </template>

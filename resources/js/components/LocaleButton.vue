@@ -11,12 +11,12 @@
 
 <script>
 export default {
-  props: ['field', 'locale', 'class'],
+  props: ['field', 'locale', 'customClass'],
 
   computed: {
     classes() {
       let classes = 'btn btn-default btn-primary btn-icon text-base';
-      if (this.class) classes += ` ${this.class}`;
+      if (this.customClass) classes += ` ${this.customClass}`;
       return classes;
     },
 
