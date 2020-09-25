@@ -1,6 +1,6 @@
 <template>
   <div v-if="field.locales">
-    <span v-for="locale in locales" :key="locale" class="flex items-center" style="margin: 2px 0;">
+    <span v-for="locale in locales" :key="locale" class="flex items-center my-1">
       <!-- Edit link -->
       <router-link
         v-if="field.value.existingLocalisations[locale]"

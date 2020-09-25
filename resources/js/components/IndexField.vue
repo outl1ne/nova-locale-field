@@ -1,5 +1,5 @@
 <template>
-  <locale-options-list :field="field" :resource-name="resourceName" style="margin: 10px 0;" />
+  <locale-options-list :field="field" :resource-name="resourceName" class="my-2" />
 </template>
 
 <script>
