@@ -26,12 +26,7 @@
       </template>
     </default-field>
 
-    <locale-button
-      v-show="localePreviouslySet && $router.currentRoute.name !== 'create'"
-      :field="field"
-      :locale="locale"
-      ref="localeButton"
-    />
+    <locale-button v-show="localePreviouslySet" :field="field" :locale="locale" ref="localeButton" />
   </div>
 </template>
 
