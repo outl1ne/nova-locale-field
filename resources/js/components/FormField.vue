@@ -26,7 +26,12 @@
       </template>
     </default-field>
 
-    <locale-button v-show="localePreviouslySet" :field="field" :locale="locale" ref="localeButton" />
+    <locale-button
+      v-show="localePreviouslySet && $router.currentRoute.name !== 'create'"
+      :field="field"
+      :locale="locale"
+      ref="localeButton"
+    />
   </div>
 </template>
 
@@ -43,8 +48,8 @@ export default {
 
   data() {
     return {
-      localeParentId: void 0,
       locale: void 0,
+      localeParentId: void 0,
       localePreviouslySet: void 0,
     };
   },
@@ -58,6 +63,19 @@ export default {
     }
   },
 
+  watch: {
+    '$route.query': {
+      handler(query) {
+        const value = this.field.value;
+
+        this.$router.go();
+
+        this.locale = (value && value.locale) || query.locale;
+        this.localeParentId = (value && value.localeParentId) || query.localeParentId;
+      },
+    },
+  },
+
   computed: {
     parentResourceName() {
       return (this.field.resources && this.field.resources[this.localeParentId]) || null;
@@ -67,8 +85,11 @@ export default {
   methods: {
     setInitialValue() {
       const value = this.field.value;
-      this.localeParentId = (value && value.localeParentId) || getParameterByName('localeParentId');
-      this.locale = (value && value.locale) || getParameterByName('locale') || '';
+      const query = this.$router.currentRoute.query;
+
+      this.locale = (value && value.locale) || query.locale;
+      this.localeParentId = (value && value.localeParentId) || query.localeParentId;
+
       this.localePreviouslySet = !!this.locale;
     },
 
