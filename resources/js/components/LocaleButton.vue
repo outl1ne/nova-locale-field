@@ -27,7 +27,7 @@ export default {
 
   computed: {
     classes() {
-      let classes = 'btn btn-default btn-primary btn-icon text-base';
+      let classes = 'btn btn-default btn-primary btn-icon text-base ml-auto';
       if (this.customClass) classes += ` ${this.customClass}`;
       if (this.disabled) classes += ` cursor-not-allowed`;
       return classes;
