@@ -65,8 +65,12 @@ export default {
 
         this.$router.go();
 
-        this.locale = (value && value.locale) || query.locale;
-        this.localeParentId = (value && value.localeParentId) || query.localeParentId;
+        const newLocale = (value && value.locale) || query.locale;
+        console.info('newLocale', newLocale);
+        if (newLocale) this.locale = newLocale;
+
+        const newParent = (value && value.localeParentId) || query.localeParentId;
+        if (newParent) this.localeParentId = newParent;
       },
     },
   },
@@ -86,6 +90,8 @@ export default {
       this.localeParentId = (value && value.localeParentId) || query.localeParentId;
 
       this.localePreviouslySet = !!this.locale;
+
+      if (!this.locale) this.locale = this.field.locales[0].value;
     },
 
     fill(formData) {
