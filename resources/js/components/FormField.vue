@@ -66,7 +66,6 @@ export default {
         this.$router.go();
 
         const newLocale = (value && value.locale) || query.locale;
-        console.info('newLocale', newLocale);
         if (newLocale) this.locale = newLocale;
 
         const newParent = (value && value.localeParentId) || query.localeParentId;
