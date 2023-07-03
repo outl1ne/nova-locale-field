@@ -1,5 +1,7 @@
 # Nova Locale Field
 
+### This package has been deprecated in favour of [Nova Translatable](https://github.com/outl1ne/nova-translatable)
+
 This [Laravel Nova](https://nova.laravel.com) package allows you to manage multiple localisations of a model.
 
 ## Screenshots
